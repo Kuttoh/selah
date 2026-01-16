@@ -6,9 +6,6 @@ Route::get('/', function () {
     return view('cta');
 })->name('home');
 
-// CTA page route
-Route::view('/cta', 'cta')->name('cta');
-
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
