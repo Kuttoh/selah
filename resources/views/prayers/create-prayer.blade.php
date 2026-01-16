@@ -1,7 +1,7 @@
 <div>
     @if($submitted)
         <div class="flex items-centermb-6">
-            <p class="text-green-400 font-medium">Thank you for sharing your prayer. It has been received with care and we will pray for you.</p>
+            <p class="text-green-400 font-medium">Thank you for sharing your prayer🙌🏾 It has been received with care and we will pray with you</p>
         </div>
     @else
         <div class="mb-6 flex flex-col items-center text-center">
