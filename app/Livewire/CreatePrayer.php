@@ -32,6 +32,6 @@ class CreatePrayer extends Component
 
     public function render()
     {
-        return view('livewire.create-prayer');
+        return view('prayers.create-prayer');
     }
 }
