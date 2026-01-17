@@ -13,6 +13,8 @@ class PrayerList extends Component
 
     public $showModal = false;
 
+    public $filter = 'all';
+
     public function mount()
     {
         $this->loadPrayers();
@@ -20,7 +22,21 @@ class PrayerList extends Component
 
     public function loadPrayers()
     {
-        $this->prayers = PrayerRequest::orderBy('created_at', 'desc')->get();
+        $query = PrayerRequest::orderBy('is_prayed_for', 'asc')->orderBy('created_at', 'desc');
+
+        if ($this->filter === 'unprayed') {
+            $query->where('is_prayed_for', false);
+        } elseif ($this->filter === 'prayed') {
+            $query->where('is_prayed_for', true);
+        }
+
+        $this->prayers = $query->get();
+    }
+
+    public function setFilter($filter)
+    {
+        $this->filter = $filter;
+        $this->loadPrayers();
     }
 
     public function show($id)

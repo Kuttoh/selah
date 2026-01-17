@@ -1,4 +1,10 @@
 <div>
+    <div class="mb-4 flex space-x-2">
+        <flux:button wire:click="setFilter('all')" :variant="$filter === 'all' ? 'primary' : 'ghost'" size="sm">All</flux:button>
+        <flux:button wire:click="setFilter('unprayed')" :variant="$filter === 'unprayed' ? 'primary' : 'ghost'" size="sm">Unprayed</flux:button>
+        <flux:button wire:click="setFilter('prayed')" :variant="$filter === 'prayed' ? 'primary' : 'ghost'" size="sm">Prayed</flux:button>
+    </div>
+
     @if ($prayers->count())
         <div class="overflow-x-auto">
             <table class="w-full table-auto border-collapse border border-gray-300 dark:border-gray-600 bg-white dark:bg-zinc-900">
@@ -13,7 +19,7 @@
                 </thead>
                 <tbody>
                     @foreach ($prayers as $prayer)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 {{ $prayer->is_prayed_for ? 'opacity-50' : '' }}">
                             <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-600">{{ Str::limit($prayer->prayer, 50) }}</td>
                             <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-600">{{ $prayer->name }}</td>
                             <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-600">
@@ -41,12 +47,12 @@
             <div class="space-y-6">
                 <div>
                     <flux:heading size="lg">Prayer Request</flux:heading>
-                    <flux:subheading>Submitted by {{ $selectedPrayer->name }}</flux:subheading>
+                    <flux:subheading>Submitted by {!! '<i>' . $selectedPrayer->name . '</i>' !!}</flux:subheading>
                 </div>
 
-                <div>
-                    <flux:text>{!! nl2br(e($selectedPrayer->prayer)) !!}</flux:text>
-                </div>
+                    <div>
+                        <flux:text>{!! nl2br(e($selectedPrayer->prayer)) !!}</flux:text>
+                    </div>
 
                 <div class="flex justify-end space-x-2">
                     <flux:button wire:click="closeModal" variant="ghost">Close</flux:button>
