@@ -47,7 +47,11 @@
             <div class="space-y-6">
                 <div>
                     <flux:heading size="lg">Prayer Request</flux:heading>
-                    <flux:subheading>Submitted by {!! '<i>' . $selectedPrayer->name . '</i>' !!}</flux:subheading>
+                    @empty($selectedPrayer->name)
+                        <flux:subheading>Submitted by <i>Anonymous</i></flux:subheading>
+                    @else 
+                        <flux:subheading>Submitted by {!! '<i>' . $selectedPrayer->name . '</i>' !!}</flux:subheading>
+                    @endempty
                 </div>
 
                     <div>
