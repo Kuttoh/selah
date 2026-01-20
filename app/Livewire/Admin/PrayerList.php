@@ -5,6 +5,7 @@ namespace App\Livewire\Admin;
 use App\Models\PrayerRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -33,10 +34,16 @@ class PrayerList extends Component
     public function markAsPrayed(): void
     {
         if ($this->selectedPrayer) {
-            $this->selectedPrayer->update([
+            $data = [
                 'is_prayed_for' => true,
                 'prayed_at' => now(),
-            ]);
+            ];
+
+            if (is_null($this->selectedPrayer->prayed_by)) {
+                $data['prayed_by'] = Auth::id();
+            }
+
+            $this->selectedPrayer->update($data);
 
             $this->showModal = false;
             $this->selectedPrayer = null;
