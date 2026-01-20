@@ -5,6 +5,7 @@ namespace Tests\Feature\Admin;
 use App\Livewire\Admin\PrayerList;
 use App\Models\PrayerRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -19,7 +20,9 @@ class PrayerListTest extends TestCase
 
         Livewire::test(PrayerList::class)
             ->assertSet('filter', 'all')
-            ->assertCount('prayers', 2);
+            ->assertViewHas('prayers', function (LengthAwarePaginator $prayers) {
+                return $prayers->total() === 2 && $prayers->perPage() === 10;
+            });
     }
 
     public function test_filters_unprayed_prayers(): void
@@ -30,7 +33,9 @@ class PrayerListTest extends TestCase
         Livewire::test(PrayerList::class)
             ->call('setFilter', 'unprayed')
             ->assertSet('filter', 'unprayed')
-            ->assertCount('prayers', 1);
+            ->assertViewHas('prayers', function (LengthAwarePaginator $prayers) {
+                return $prayers->total() === 1 && $prayers->first()->is_prayed_for === false;
+            });
     }
 
     public function test_filters_prayed_prayers(): void
@@ -41,7 +46,9 @@ class PrayerListTest extends TestCase
         Livewire::test(PrayerList::class)
             ->call('setFilter', 'prayed')
             ->assertSet('filter', 'prayed')
-            ->assertCount('prayers', 1);
+            ->assertViewHas('prayers', function (LengthAwarePaginator $prayers) {
+                return $prayers->total() === 1 && $prayers->first()->is_prayed_for === true;
+            });
     }
 
     public function test_marking_as_prayed_updates_list(): void
@@ -66,10 +73,46 @@ class PrayerListTest extends TestCase
 
         Livewire::test(PrayerList::class)
             ->call('setFilter', 'unprayed')
-            ->assertCount('prayers', 2)
+            ->assertViewHas('prayers', function (LengthAwarePaginator $prayers) {
+                return $prayers->total() === 2;
+            })
             ->call('show', $prayer->id)
             ->call('markAsPrayed')
             ->assertSet('filter', 'unprayed')
-            ->assertCount('prayers', 1); // Should now have only 1 unprayed
+            ->assertViewHas('prayers', function (LengthAwarePaginator $prayers) {
+                return $prayers->total() === 1;
+            }); // Should now have only 1 unprayed
+    }
+
+    public function test_orders_pending_before_prayed_then_newest_first(): void
+    {
+        $pendingOlder = PrayerRequest::factory()->create([
+            'is_prayed_for' => false,
+            'created_at' => now()->subDays(2),
+        ]);
+        $pendingNewer = PrayerRequest::factory()->create([
+            'is_prayed_for' => false,
+            'created_at' => now()->subDay(),
+        ]);
+        $prayedNewest = PrayerRequest::factory()->create([
+            'is_prayed_for' => true,
+            'created_at' => now(),
+        ]);
+        $prayedOlder = PrayerRequest::factory()->create([
+            'is_prayed_for' => true,
+            'created_at' => now()->subDays(3),
+        ]);
+
+        Livewire::test(PrayerList::class)
+            ->assertViewHas('prayers', function (LengthAwarePaginator $prayers) use ($pendingNewer, $pendingOlder, $prayedNewest, $prayedOlder) {
+                $ids = $prayers->pluck('id')->all();
+
+                return $ids === [
+                    $pendingNewer->id,
+                    $pendingOlder->id,
+                    $prayedNewest->id,
+                    $prayedOlder->id,
+                ];
+            });
     }
 }

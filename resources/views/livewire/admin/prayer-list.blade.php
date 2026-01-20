@@ -38,6 +38,10 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="mt-4">
+            {{ $prayers->links() }}
+        </div>
     @else
         <p class="text-gray-500 dark:text-gray-400">No prayer requests found.</p>
     @endif
