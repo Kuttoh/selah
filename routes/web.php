@@ -10,7 +10,7 @@ Route::get('/prayers/create', function () {
     return view('prayers.create');
 })->name('prayers.create');
 
-Route::get('/prayers', function () {
+Route::prefix('admin')->get('/prayers', function () {
     return view('prayers.prayers');
 })->middleware(['auth', 'verified'])->name('prayers.index');
 
