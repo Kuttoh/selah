@@ -14,8 +14,8 @@ Route::get('/prayers', function () {
     return view('prayers.prayers');
 })->middleware(['auth', 'verified'])->name('prayers.index');
 
-Route::view('dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Route::view('dashboard', 'dashboard')
+//     ->middleware(['auth', 'verified'])
+//     ->name('dashboard');
 
 require __DIR__.'/settings.php';
