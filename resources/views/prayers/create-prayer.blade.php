@@ -1,19 +1,19 @@
 <div>
     @if($submitted)
         <div class="flex flex-col items-center mb-6">
-                <div class="">
-                    <img src="/favicon-selah.svg" alt="Selah" class="size-9 mb-4 mx-auto fill-current dark:text-black" />
+                <div class="mb-4">
+                    <x-app-logo-icon class="size-9 fill-current text-black dark:text-white" />
                 </div>
-                <h1 class="mb-4 font-medium text-lg">Prayer Submitted</h1>
-            <p class="text-green-400 font-medium mb-2">Thank you for sharing your prayer 🙌🏾</p>
-            <p class="text-green-400 font-medium">It has been received with care and we will pray with you!</p>
+                <h1 class="mb-4 font-medium text-lg">Success!</h1>
+            <p class="mb-2">Thank you for sharing your prayer 🙌🏾</p>
+            <p class="font-medium">We've received it with care and we will pray with you!</p>
         </div>
     @else
         <div class="mb-6 flex flex-col items-center text-center">
             <div class="p-2 mb-4">
                 <x-app-logo-icon class="size-9 fill-current text-black dark:text-white" />
             </div>
-            <h1 class="mb-6 font-medium text-lg">Share Yours Prayer</h1>
+            <h1 class="mb-6 font-medium text-lg">Share Your Prayer</h1>
             <p class="text-[#706f6c] dark:text-[#A1A09A]">Take a moment to share your prayer 🤍, your words are heard and valued in this sacred space &#x1F64F;</p>
         </div>
         <div class="flex flex-col items-center text-center">

@@ -1,8 +1,15 @@
 <div>
-    <div class="mb-4 flex space-x-2">
-        <flux:button wire:click="setFilter('all')" :variant="$filter === 'all' ? 'primary' : 'ghost'" size="sm">All</flux:button>
-        <flux:button wire:click="setFilter('unprayed')" :variant="$filter === 'unprayed' ? 'primary' : 'ghost'" size="sm">Unprayed</flux:button>
-        <flux:button wire:click="setFilter('prayed')" :variant="$filter === 'prayed' ? 'primary' : 'ghost'" size="sm">Prayed</flux:button>
+    <div class="flex justify-end">
+        <a href="{{ route('prayers.create') }}">
+            <flux:button variant="primary" size="sm">Submit Prayer</flux:button>
+        </a>
+    </div>
+    <div class="mb-4 flex justify-between items-center">
+        <div class="flex space-x-2">
+            <flux:button wire:click="setFilter('all')" :variant="$filter === 'all' ? 'primary' : 'ghost'" size="sm">All</flux:button>
+            <flux:button wire:click="setFilter('unprayed')" :variant="$filter === 'unprayed' ? 'primary' : 'ghost'" size="sm">Unprayed</flux:button>
+            <flux:button wire:click="setFilter('prayed')" :variant="$filter === 'prayed' ? 'primary' : 'ghost'" size="sm">Prayed</flux:button>
+        </div>
     </div>
 
     @if ($prayers->count())
