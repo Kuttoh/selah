@@ -16,6 +16,8 @@ class PrayerRequest extends Model
         'is_prayed_for',
         'prayed_at',
         'prayed_by',
+        'public_token',
+        'last_prayed_at',
     ];
 
     protected $casts = [
