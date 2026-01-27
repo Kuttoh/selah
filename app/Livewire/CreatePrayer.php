@@ -2,14 +2,19 @@
 
 namespace App\Livewire;
 
-use Livewire\Component;
 use App\Models\PrayerRequest;
+use Illuminate\Support\Str;
+use Livewire\Component;
 
 class CreatePrayer extends Component
 {
     public $prayer = '';
+
     public $name = '';
+
     public $submitted = false;
+
+    public $publicToken = null;
 
     protected $rules = [
         'prayer' => 'required|string|min:1',
@@ -20,12 +25,14 @@ class CreatePrayer extends Component
     {
         $this->validate();
 
-        PrayerRequest::create([
+        $prayer = PrayerRequest::create([
             'prayer' => $this->prayer,
             'name' => $this->name ?: null,
             'is_prayed_for' => false,
+            'public_token' => Str::uuid()->toString(),
         ]);
 
+        $this->publicToken = $prayer->public_token;
         $this->submitted = true;
         $this->reset(['prayer', 'name']);
     }

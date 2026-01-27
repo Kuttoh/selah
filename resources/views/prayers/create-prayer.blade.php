@@ -1,16 +1,17 @@
 <div>
     @if($submitted)
-        <div class="flex flex-col items-center mb-6">
-                <div class="mb-4">
+        <div class="flex flex-col items-center">
+                <div class="">
                     <x-app-logo-icon class="size-9 fill-current text-black dark:text-white" />
                 </div>
-                <h1 class="mb-4 font-medium text-lg">Success!</h1>
-            <p class="mb-2">Thank you for sharing your prayer 🙌🏾</p>
-            <p class="font-medium">We've received it with care and we will pray with you!</p>
+                <h1 class="font-medium text-lg text-green-700 mb-2">Success!</h1>
+            <p class="mb-4">Thank you for sharing your prayer 🙌🏾, we've received it with care and we will pray with you!</p>
+            <p class="font-medium mb-4">Please KEEP the link below safe to track the progress of your prayer</p>
+            <a class="text-[#d02e06] underline font-medium" href="{{ route('prayers.progress', $publicToken) }}" target="_blank">{{ route('prayers.progress', $publicToken) }}</a>
         </div>
     @else
-        <div class="mb-6 flex flex-col items-center text-center">
-            <div class="p-2 mb-4">
+        <div class="flex flex-col items-center text-center mb-4">
+            <div class="p-2">
                 <x-app-logo-icon class="size-9 fill-current text-black dark:text-white" />
             </div>
             <h1 class="mb-6 font-medium text-lg">Share Your Prayer</h1>

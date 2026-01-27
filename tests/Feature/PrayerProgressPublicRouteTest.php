@@ -1,0 +1,54 @@
+<?php
+
+namespace Tests\Feature;
+
+use App\Models\PrayerRequest;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Carbon;
+use Tests\TestCase;
+
+class PrayerProgressPublicRouteTest extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_not_prayed_state_renders_message(): void
+    {
+        $prayer = PrayerRequest::factory()->create([
+            'public_token' => 'token-abc',
+            'last_prayed_at' => null,
+            'is_prayed_for' => false,
+            'prayer' => 'Please pray for my family.',
+        ]);
+
+        $response = $this->get('/prayers/token-abc');
+
+        $response->assertStatus(200)
+            ->assertSee('Prayer Progress')
+            ->assertSee('Please pray for my family.')
+            ->assertSee('Your prayer has not yet been marked as prayed.');
+    }
+
+    public function test_prayed_state_renders_message_with_date(): void
+    {
+        $date = Carbon::parse('2026-01-01 10:00:00');
+        $prayer = PrayerRequest::factory()->create([
+            'public_token' => 'token-def',
+            'last_prayed_at' => $date,
+            'is_prayed_for' => true,
+            'prayer' => 'Pray for health.',
+        ]);
+
+        $response = $this->get('/prayers/token-def');
+
+        $response->assertStatus(200)
+            ->assertSee('Pray for health.')
+            ->assertSee('Your prayer was prayed for on '.$date->format('F j, Y g:i A'));
+    }
+
+    public function test_invalid_token_returns_404(): void
+    {
+        $response = $this->get('/prayers/does-not-exist');
+
+        $response->assertStatus(404);
+    }
+}

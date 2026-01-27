@@ -37,6 +37,7 @@ class PrayerList extends Component
             $data = [
                 'is_prayed_for' => true,
                 'prayed_at' => now(),
+                'last_prayed_at' => now(),
             ];
 
             if (is_null($this->selectedPrayer->prayed_by)) {

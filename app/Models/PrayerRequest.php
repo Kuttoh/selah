@@ -23,6 +23,7 @@ class PrayerRequest extends Model
     protected $casts = [
         'is_prayed_for' => 'boolean',
         'prayed_at' => 'datetime',
+        'last_prayed_at' => 'datetime',
     ];
 
     public function prayedBy(): BelongsTo
