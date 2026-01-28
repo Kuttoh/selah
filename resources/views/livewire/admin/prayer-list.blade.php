@@ -69,7 +69,7 @@
                         <flux:text>{!! nl2br(e($selectedPrayer->prayer)) !!}</flux:text>
                     </div>
 
-                <div class="flex justify-end space-x-2">
+                <div class="flex justify-between space-x-2">
                     <flux:button wire:click="closeModal" variant="ghost">Close</flux:button>
                     @if ($selectedPrayer->status->value === 'received')
                         <flux:button wire:click="markAsPrayed" variant="primary">Mark as Prayed</flux:button>

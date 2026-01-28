@@ -15,6 +15,9 @@
                     <flux:sidebar.item icon="home" :href="route('prayers.index')" :current="request()->routeIs('prayers.index')" wire:navigate>
                         {{ __('Prayers') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="chat-bubble-left-right" :href="route('admin.testimonials')" :current="request()->routeIs('admin.testimonials')" wire:navigate>
+                        {{ __('Testimonials') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
             </flux:sidebar.nav>
 

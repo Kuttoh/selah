@@ -51,4 +51,34 @@ class PrayerProgressPublicRouteTest extends TestCase
 
         $response->assertStatus(404);
     }
+
+    public function test_answered_state_renders_message_with_date(): void
+    {
+        $date = Carbon::parse('2026-01-15');
+        $prayer = PrayerRequest::factory()->create([
+            'public_token' => 'token-answered',
+            'status' => PrayerStatus::Answered,
+            'answered_at' => $date,
+            'prayer' => 'God answered my prayer.',
+        ]);
+
+        $response = $this->get('/prayers/token-answered');
+
+        $response->assertStatus(200)
+            ->assertSee('God answered my prayer.')
+            ->assertSee('Your prayer was answered on '.$date->format('F j, Y'));
+    }
+
+    public function test_mark_prayer_answered_component_is_present(): void
+    {
+        $prayer = PrayerRequest::factory()->create([
+            'public_token' => 'token-component',
+            'status' => PrayerStatus::Prayed,
+        ]);
+
+        $response = $this->get('/prayers/token-component');
+
+        $response->assertStatus(200)
+            ->assertSeeLivewire(\App\Livewire\MarkPrayerAnswered::class);
+    }
 }

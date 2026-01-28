@@ -48,6 +48,10 @@
                     </a>
                 </li>
             </ul>
+
+            {{-- <div class=""> --}}
+                <livewire:testimonials-carousel />
+            {{-- </div> --}}
         </div>
     </main>
 

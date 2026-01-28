@@ -15,6 +15,10 @@ Route::prefix('admin')->get('/prayers', function () {
     return view('prayers.prayers');
 })->middleware(['auth', 'verified'])->name('prayers.index');
 
+Route::prefix('admin')->get('/testimonials', function () {
+    return view('testimonials.testimonials');
+})->middleware(['auth', 'verified'])->name('admin.testimonials');
+
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
 //     ->name('dashboard');

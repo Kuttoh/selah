@@ -35,4 +35,15 @@ class PrayerRequestFactory extends Factory
             'prayed_at' => now(),
         ]);
     }
+
+    /**
+     * Indicate that the prayer request has been answered.
+     */
+    public function answered(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => PrayerStatus::Answered,
+            'answered_at' => now(),
+        ]);
+    }
 }
