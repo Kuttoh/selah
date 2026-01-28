@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Admin;
 
+use App\Enums\PrayerStatus;
 use App\Livewire\Admin\PrayerList;
 use App\Models\PrayerRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,8 +16,8 @@ class PrayerListTest extends TestCase
 
     public function test_shows_all_prayers_by_default(): void
     {
-        PrayerRequest::factory()->create(['is_prayed_for' => false]);
-        PrayerRequest::factory()->create(['is_prayed_for' => true]);
+        PrayerRequest::factory()->create(['status' => PrayerStatus::Received]);
+        PrayerRequest::factory()->create(['status' => PrayerStatus::Prayed]);
 
         Livewire::test(PrayerList::class)
             ->assertSet('filter', 'all')
@@ -27,33 +28,33 @@ class PrayerListTest extends TestCase
 
     public function test_filters_unprayed_prayers(): void
     {
-        PrayerRequest::factory()->create(['is_prayed_for' => false]);
-        PrayerRequest::factory()->create(['is_prayed_for' => true]);
+        PrayerRequest::factory()->create(['status' => PrayerStatus::Received]);
+        PrayerRequest::factory()->create(['status' => PrayerStatus::Prayed]);
 
         Livewire::test(PrayerList::class)
             ->call('setFilter', 'unprayed')
             ->assertSet('filter', 'unprayed')
             ->assertViewHas('prayers', function (LengthAwarePaginator $prayers) {
-                return $prayers->total() === 1 && $prayers->first()->is_prayed_for === false;
+                return $prayers->total() === 1 && $prayers->first()->status === PrayerStatus::Received;
             });
     }
 
     public function test_filters_prayed_prayers(): void
     {
-        PrayerRequest::factory()->create(['is_prayed_for' => false]);
-        PrayerRequest::factory()->create(['is_prayed_for' => true]);
+        PrayerRequest::factory()->create(['status' => PrayerStatus::Received]);
+        PrayerRequest::factory()->create(['status' => PrayerStatus::Prayed]);
 
         Livewire::test(PrayerList::class)
             ->call('setFilter', 'prayed')
             ->assertSet('filter', 'prayed')
             ->assertViewHas('prayers', function (LengthAwarePaginator $prayers) {
-                return $prayers->total() === 1 && $prayers->first()->is_prayed_for === true;
+                return $prayers->total() === 1 && $prayers->first()->status === PrayerStatus::Prayed;
             });
     }
 
     public function test_marking_as_prayed_updates_list(): void
     {
-        $prayer = PrayerRequest::factory()->create(['is_prayed_for' => false]);
+        $prayer = PrayerRequest::factory()->create(['status' => PrayerStatus::Received]);
 
         Livewire::test(PrayerList::class)
             ->call('show', $prayer->id)
@@ -62,14 +63,14 @@ class PrayerListTest extends TestCase
             ->assertSet('selectedPrayer', null);
 
         $prayer->refresh();
-        $this->assertTrue($prayer->is_prayed_for);
+        $this->assertSame($prayer->status, PrayerStatus::Prayed);
         $this->assertNotNull($prayer->prayed_at);
     }
 
     public function test_filter_persists_after_marking_as_prayed(): void
     {
-        PrayerRequest::factory()->create(['is_prayed_for' => false]);
-        $prayer = PrayerRequest::factory()->create(['is_prayed_for' => false]);
+        PrayerRequest::factory()->create(['status' => PrayerStatus::Received]);
+        $prayer = PrayerRequest::factory()->create(['status' => PrayerStatus::Received]);
 
         Livewire::test(PrayerList::class)
             ->call('setFilter', 'unprayed')
@@ -87,19 +88,19 @@ class PrayerListTest extends TestCase
     public function test_orders_pending_before_prayed_then_newest_first(): void
     {
         $pendingOlder = PrayerRequest::factory()->create([
-            'is_prayed_for' => false,
+            'status' => PrayerStatus::Received,
             'created_at' => now()->subDays(2),
         ]);
         $pendingNewer = PrayerRequest::factory()->create([
-            'is_prayed_for' => false,
+            'status' => PrayerStatus::Received,
             'created_at' => now()->subDay(),
         ]);
         $prayedNewest = PrayerRequest::factory()->create([
-            'is_prayed_for' => true,
+            'status' => PrayerStatus::Prayed,
             'created_at' => now(),
         ]);
         $prayedOlder = PrayerRequest::factory()->create([
-            'is_prayed_for' => true,
+            'status' => PrayerStatus::Prayed,
             'created_at' => now()->subDays(3),
         ]);
 

@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Enums\PrayerStatus;
 use App\Models\PrayerRequest;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
@@ -15,8 +16,7 @@ class PrayerProgressPublicRouteTest extends TestCase
     {
         $prayer = PrayerRequest::factory()->create([
             'public_token' => 'token-abc',
-            'last_prayed_at' => null,
-            'is_prayed_for' => false,
+            'status' => PrayerStatus::Received,
             'prayer' => 'Please pray for my family.',
         ]);
 
@@ -33,8 +33,8 @@ class PrayerProgressPublicRouteTest extends TestCase
         $date = Carbon::parse('2026-01-01 10:00:00');
         $prayer = PrayerRequest::factory()->create([
             'public_token' => 'token-def',
-            'last_prayed_at' => $date,
-            'is_prayed_for' => true,
+            'status' => PrayerStatus::Prayed,
+            'prayed_at' => $date,
             'prayer' => 'Pray for health.',
         ]);
 

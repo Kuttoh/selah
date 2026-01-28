@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PrayerStatus;
 use App\Models\PrayerRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\View\View;
@@ -19,10 +20,10 @@ class PublicPrayerProgressController
 
         $prayerText = (string) $prayer->prayer;
 
-        if ($prayer->last_prayed_at === null) {
+        if ($prayer->status === PrayerStatus::Received) {
             $statusMessage = 'Your prayer has not yet been marked as prayed.';
         } else {
-            $date = Carbon::parse($prayer->last_prayed_at)->format('F j, Y g:i A');
+            $date = Carbon::parse($prayer->prayed_at)->format('F j, Y g:i A');
             $statusMessage = "Your prayer was prayed for on {$date}";
         }
 

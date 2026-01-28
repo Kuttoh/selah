@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Enums\PrayerStatus;
 use App\Models\PrayerRequest;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
@@ -35,9 +36,8 @@ class PrayerList extends Component
     {
         if ($this->selectedPrayer) {
             $data = [
-                'is_prayed_for' => true,
+                'status' => PrayerStatus::Prayed,
                 'prayed_at' => now(),
-                'last_prayed_at' => now(),
             ];
 
             if (is_null($this->selectedPrayer->prayed_by)) {
@@ -69,13 +69,13 @@ class PrayerList extends Component
         $query = PrayerRequest::query();
 
         if ($this->filter === 'unprayed') {
-            $query->where('is_prayed_for', false);
+            $query->where('status', PrayerStatus::Received);
         } elseif ($this->filter === 'prayed') {
-            $query->where('is_prayed_for', true);
+            $query->where('status', PrayerStatus::Prayed);
         }
 
         return $query
-            ->orderBy('is_prayed_for')
+            ->orderByRaw('CASE WHEN status = ? THEN 0 ELSE 1 END', [PrayerStatus::Received->value])
             ->orderByDesc('created_at');
     }
 }

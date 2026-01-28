@@ -26,12 +26,12 @@
                 </thead>
                 <tbody>
                     @foreach ($prayers as $prayer)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 {{ $prayer->is_prayed_for ? 'opacity-50' : '' }}">
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 {{ $prayer->status->value === 'prayed' ? 'opacity-50' : '' }}">
                             <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-600">{{ Str::limit($prayer->prayer, 50) }}</td>
                             <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-600">{{ $prayer->name }}</td>
                             <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-600">
-                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $prayer->is_prayed_for ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' }}">
-                                    {{ $prayer->is_prayed_for ? 'Prayed' : 'Pending' }}
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $prayer->status->value === 'prayed' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200' }}">
+                                    {{ $prayer->status->value === 'prayed' ? 'Prayed' : 'Pending' }}
                                 </span>
                             </td>
                             <td class="px-4 py-2 text-sm text-gray-900 dark:text-gray-100 border-b border-gray-200 dark:border-gray-600">{{ $prayer->created_at->format('M j, Y') }}</td>
@@ -71,7 +71,7 @@
 
                 <div class="flex justify-end space-x-2">
                     <flux:button wire:click="closeModal" variant="ghost">Close</flux:button>
-                    @if (!$selectedPrayer->is_prayed_for)
+                    @if ($selectedPrayer->status->value === 'received')
                         <flux:button wire:click="markAsPrayed" variant="primary">Mark as Prayed</flux:button>
                     @endif
                 </div>

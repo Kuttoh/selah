@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Enums\PrayerStatus;
 use App\Models\PrayerRequest;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -28,7 +29,7 @@ class CreatePrayer extends Component
         $prayer = PrayerRequest::create([
             'prayer' => $this->prayer,
             'name' => $this->name ?: null,
-            'is_prayed_for' => false,
+            'status' => PrayerStatus::Received,
             'public_token' => Str::uuid()->toString(),
         ]);
 

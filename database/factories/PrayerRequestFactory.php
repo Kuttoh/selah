@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\PrayerStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,7 @@ class PrayerRequestFactory extends Factory
         return [
             'prayer' => $this->faker->sentence(),
             'name' => $this->faker->name(),
-            'is_prayed_for' => false,
+            'status' => PrayerStatus::Received,
             'prayed_at' => null,
         ];
     }
@@ -30,7 +31,7 @@ class PrayerRequestFactory extends Factory
     public function prayed(): static
     {
         return $this->state(fn (array $attributes) => [
-            'is_prayed_for' => true,
+            'status' => PrayerStatus::Prayed,
             'prayed_at' => now(),
         ]);
     }

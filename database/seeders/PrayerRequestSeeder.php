@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\PrayerStatus;
 use App\Models\PrayerRequest;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -60,18 +61,19 @@ class PrayerRequestSeeder extends Seeder
         $users = User::all();
 
         foreach ($prayers as $index => $prayer) {
-            $isPrayedFor = fake()->boolean(40); // 40% chance of being prayed for
+            $isPreyed = fake()->boolean(40); // 40% chance of being prayed for
+            $status = $isPreyed ? PrayerStatus::Prayed : PrayerStatus::Received;
             $prayedBy = null;
 
-            if ($isPrayedFor && $users->isNotEmpty()) {
+            if ($isPreyed && $users->isNotEmpty()) {
                 $prayedBy = $users->random()->id;
             }
 
             PrayerRequest::create([
                 'prayer' => $prayer,
                 'name' => fake()->randomElement($names),
-                'is_prayed_for' => $isPrayedFor,
-                'prayed_at' => $isPrayedFor ? fake()->dateTimeBetween('-30 days') : null,
+                'status' => $status,
+                'prayed_at' => $isPreyed ? fake()->dateTimeBetween('-30 days') : null,
                 'prayed_by' => $prayedBy,
             ]);
         }
