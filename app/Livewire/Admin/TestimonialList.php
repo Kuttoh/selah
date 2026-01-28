@@ -67,6 +67,11 @@ class TestimonialList extends Component
         $this->closeCreateModal();
     }
 
+    public function updatedFilter(): void
+    {
+        $this->resetPage();
+    }
+
     public function setFilter(string $filter): void
     {
         $this->filter = $filter;

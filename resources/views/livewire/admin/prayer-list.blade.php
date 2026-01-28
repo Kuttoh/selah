@@ -1,14 +1,17 @@
 <div>
-    <div class="flex justify-end">
+    <div class="flex justify-end mb-4">
         <a href="{{ route('prayers.create') }}">
             <flux:button variant="primary" size="sm">Submit Prayer</flux:button>
         </a>
     </div>
-    <div class="mb-4 flex justify-between items-center">
-        <div class="flex space-x-2">
-            <flux:button wire:click="setFilter('all')" :variant="$filter === 'all' ? 'primary' : 'ghost'" size="sm">All</flux:button>
-            <flux:button wire:click="setFilter('unprayed')" :variant="$filter === 'unprayed' ? 'primary' : 'ghost'" size="sm">Unprayed</flux:button>
-            <flux:button wire:click="setFilter('prayed')" :variant="$filter === 'prayed' ? 'primary' : 'ghost'" size="sm">Prayed</flux:button>
+    <div class="mb-4">
+        <div class="w-40">
+            <flux:select wire:model.live="filter">
+                <flux:select.option value="all">All</flux:select.option>
+                <flux:select.option value="unprayed">Unprayed</flux:select.option>
+                <flux:select.option value="prayed">Prayed</flux:select.option>
+                <flux:select.option value="answered">Answered</flux:select.option>
+            </flux:select>
         </div>
     </div>
 

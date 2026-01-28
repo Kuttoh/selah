@@ -1,13 +1,15 @@
 <div>
-    <div class="flex justify-end">
+    <div class="flex justify-end mb-4">
         <flux:button wire:click="openCreateModal" variant="primary" size="sm">{{ __('Submit Testimonial') }}</flux:button>
     </div>
-    <div class="mb-4 flex justify-between items-center">
-        <div class="flex space-x-2">
-            <flux:button wire:click="setFilter('all')" :variant="$filter === 'all' ? 'primary' : 'ghost'" size="sm">{{ __('All') }}</flux:button>
-            <flux:button wire:click="setFilter('pending')" :variant="$filter === 'pending' ? 'primary' : 'ghost'" size="sm">{{ __('Pending') }}</flux:button>
-            <flux:button wire:click="setFilter('approved')" :variant="$filter === 'approved' ? 'primary' : 'ghost'" size="sm">{{ __('Approved') }}</flux:button>
-            <flux:button wire:click="setFilter('private')" :variant="$filter === 'private' ? 'primary' : 'ghost'" size="sm">{{ __('Private') }}</flux:button>
+    <div class="mb-4">
+        <div class="w-40">
+            <flux:select wire:model.live="filter">
+                <flux:select.option value="all">{{ __('All') }}</flux:select.option>
+                <flux:select.option value="pending">{{ __('Pending') }}</flux:select.option>
+                <flux:select.option value="approved">{{ __('Approved') }}</flux:select.option>
+                <flux:select.option value="private">{{ __('Private') }}</flux:select.option>
+            </flux:select>
         </div>
     </div>
 

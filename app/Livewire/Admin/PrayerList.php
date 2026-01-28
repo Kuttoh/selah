@@ -20,6 +20,11 @@ class PrayerList extends Component
 
     public string $filter = 'all';
 
+    public function updatedFilter(): void
+    {
+        $this->resetPage();
+    }
+
     public function setFilter(string $filter): void
     {
         $this->filter = $filter;
@@ -72,6 +77,8 @@ class PrayerList extends Component
             $query->where('status', PrayerStatus::Received);
         } elseif ($this->filter === 'prayed') {
             $query->where('status', PrayerStatus::Prayed);
+        } elseif ($this->filter === 'answered') {
+            $query->where('status', PrayerStatus::Answered);
         }
 
         return $query
