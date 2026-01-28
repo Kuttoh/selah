@@ -4,8 +4,8 @@
                 <div class="">
                     <x-app-logo-icon class="size-9 fill-current text-black dark:text-white" />
                 </div>
-                <h1 class="font-medium text-lg text-green-700 mb-2">Success!</h1>
-            <p class="mb-4">Thank you for sharing your prayer 🙌🏾, we've received it with care and we will pray with you!</p>
+                <h1 class="font-medium text-lg text-green-700 mb-2">Thank you for sharing your prayer 🙌🏾</h1>
+            {{-- <p class="mb-4">Thank you for sharing your prayer 🙌🏾, we've received it with care and we will pray with you!</p> --}}
             <p class="font-medium mb-4">Please KEEP the link below safe to track the progress of your prayer</p>
             <a class="text-[#d02e06] underline font-medium" href="{{ route('prayers.progress', $publicToken) }}" target="_blank">{{ route('prayers.progress', $publicToken) }}</a>
         </div>
