@@ -57,7 +57,7 @@
                     <flux:field variant="inline">
                         <flux:checkbox wire:model="isPublic" />
                         <flux:label class="text-[#706f6c] dark:text-[#A1A09A] text-xs italic">
-                            {{ __('Allow your testimony to be displayed to encourage others. Requires admin approval before appearing.') }}
+                            {{ __('Tick this box to allow your testimony to be displayed to encourage others. Requires admin approval before appearing.') }}
                         </flux:label>
                     </flux:field>
 
