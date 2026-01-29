@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Livewire\TestimonialsCarousel;
+use App\Livewire\Testimonials\TestimonialsCarousel;
 use App\Models\Testimonial;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;

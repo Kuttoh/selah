@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="pt-6 border-t border-[#19140035] dark:border-[#3E3E3A]">
-                    <livewire:mark-prayer-answered :public-token="$publicToken" />
+                    <livewire:prayers.mark-prayer-answered :public-token="$publicToken" />
                 </div>
             </div>
 

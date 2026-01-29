@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Prayers;
 
 use App\Enums\PrayerStatus;
 use App\Models\PrayerRequest;

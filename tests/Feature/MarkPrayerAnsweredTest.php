@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Enums\PrayerStatus;
-use App\Livewire\MarkPrayerAnswered;
+use App\Livewire\Prayers\MarkPrayerAnswered;
 use App\Models\PrayerRequest;
 use App\Models\Testimonial;
 use Illuminate\Foundation\Testing\RefreshDatabase;

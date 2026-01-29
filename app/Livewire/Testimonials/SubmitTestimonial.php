@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Testimonials;
 
 use App\Models\Testimonial;
 use Livewire\Component;
@@ -53,6 +53,6 @@ class SubmitTestimonial extends Component
 
     public function render()
     {
-        return view('livewire.submit-testimonial');
+        return view('testimonials.submit-testimonial');
     }
 }

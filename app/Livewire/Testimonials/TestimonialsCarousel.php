@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\Livewire\Testimonials;
 
 use App\Models\Testimonial;
 use Illuminate\Support\Collection;
@@ -20,6 +20,6 @@ class TestimonialsCarousel extends Component
 
     public function render()
     {
-        return view('livewire.testimonials-carousel');
+        return view('testimonials.testimonials-carousel');
     }
 }

@@ -79,6 +79,6 @@ class PrayerProgressPublicRouteTest extends TestCase
         $response = $this->get('/prayers/token-component');
 
         $response->assertStatus(200)
-            ->assertSeeLivewire(\App\Livewire\MarkPrayerAnswered::class);
+            ->assertSeeLivewire(\App\Livewire\Prayers\MarkPrayerAnswered::class);
     }
 }

@@ -37,10 +37,10 @@
                 </li>
             </ul>
 
-            <livewire:testimonials-carousel />
+            <livewire:testimonials.testimonials-carousel />
 
             <div class="mt-4">
-                <livewire:submit-testimonial />
+                <livewire:testimonials.submit-testimonial />
             </div>
         </div>
     </main>

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Livewire\SubmitTestimonial;
+use App\Livewire\Testimonials\SubmitTestimonial;
 use App\Models\Testimonial;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
