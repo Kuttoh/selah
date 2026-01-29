@@ -19,17 +19,29 @@
                     <p class="text-[#706f6c] dark:text-[#A1A09A]">"But when you pray, go into your room, close the door and pray to your Father, who is unseen."</p>
                 </li>
             </ul>
-            <ul class="flex gap-3 text-sm leading-normal mt-4">
+            <ul class="flex flex-col gap-6 mb-8 max-w-md">
+                <li class="space-y-2">
+                    <p class="text-[#706f6c] dark:text-[#A1A09A]">You are welcome to submit a prayer or request us to call you.</p>
+                </li>
+            </ul>
+            <ul class="flex gap-3 text-sm leading-normal">
+                <li>
+                    <a href="#" class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:bg-black hover:border-black px-5 py-1.5 bg-[#1b1b18] rounded-sm border border-black text-white text-sm leading-normal">
+                        Request Callback
+                    </a>
+                </li>
                 <li>
                     <a href="{{ route('prayers.create') }}" class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:bg-black hover:border-black px-5 py-1.5 bg-[#1b1b18] rounded-sm border border-black text-white text-sm leading-normal">
-                        Create Prayer
+                        Submit Prayer
                     </a>
                 </li>
             </ul>
 
-            {{-- <div class=""> --}}
-                <livewire:testimonials-carousel />
-            {{-- </div> --}}
+            <livewire:testimonials-carousel />
+
+            <div class="mt-4">
+                <livewire:submit-testimonial />
+            </div>
         </div>
     </main>
 
