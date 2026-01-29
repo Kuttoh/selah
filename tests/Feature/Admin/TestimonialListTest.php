@@ -18,7 +18,7 @@ class TestimonialListTest extends TestCase
     {
         $response = $this->get('/admin/testimonials');
 
-        $response->assertRedirect('/login');
+        $response->assertRedirect(route('login'));
     }
 
     public function test_authenticated_user_can_access_testimonials_page(): void
