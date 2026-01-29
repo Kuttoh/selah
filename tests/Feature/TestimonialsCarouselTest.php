@@ -18,7 +18,7 @@ class TestimonialsCarouselTest extends TestCase
         Testimonial::factory()->create(['is_public' => false]);
 
         Livewire::test(TestimonialsCarousel::class)
-            ->assertDontSee('Answered Prayers');
+            ->assertDontSee('Testimonials');
     }
 
     public function test_renders_carousel_when_approved_testimonials_exist(): void
@@ -29,7 +29,7 @@ class TestimonialsCarouselTest extends TestCase
         ]);
 
         Livewire::test(TestimonialsCarousel::class)
-            ->assertSee('Answered Prayers')
+            ->assertSee('Testimonials')
             ->assertSee('God is good!')
             ->assertSee('Sarah M.');
     }
@@ -74,7 +74,7 @@ class TestimonialsCarouselTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200)
-            ->assertSee('Answered Prayers')
+            ->assertSee('Testimonials')
             ->assertSee('My prayer was answered!');
     }
 
@@ -83,6 +83,6 @@ class TestimonialsCarouselTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200)
-            ->assertDontSee('Answered Prayers');
+            ->assertDontSee('Testimonials');
     }
 }

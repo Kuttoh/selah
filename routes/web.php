@@ -2,10 +2,22 @@
 
 use App\Http\Controllers\PublicPrayerProgressController;
 use Illuminate\Support\Facades\Route;
+use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
 Route::get('/', function () {
     return view('cta');
 })->name('home');
+
+Route::redirect('/login', '/admin/login', 301);
+Route::redirect('/register', '/admin/register', 301);
+Route::redirect('/admin', '/admin/prayers');
+
+Route::prefix('admin')
+    ->middleware(['auth'])
+    ->group(function () {
+        Route::get('/register', [RegisteredUserController::class, 'create'])->name('register');
+        Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
+    });
 
 Route::get('/prayers/create', function () {
     return view('prayers.create');
