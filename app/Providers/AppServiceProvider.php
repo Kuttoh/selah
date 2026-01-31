@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\View\Composers\NavigationComposer;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -24,6 +25,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         View::addNamespace('layouts', resource_path('views/components/layouts'));
+
+        View::composer('components.layouts.app.sidebar', NavigationComposer::class);
 
         RateLimiter::for('prayer-progress', function (Request $request) {
             return [

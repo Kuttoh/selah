@@ -12,13 +12,13 @@
 
             <flux:sidebar.nav>
                 <flux:sidebar.group :heading="__('Platform')" class="grid">
-                    <flux:sidebar.item icon="home" :href="route('prayers.index')" :current="request()->routeIs('prayers.index')" wire:navigate>
+                    <flux:sidebar.item icon="home" :href="route('prayers.index')" :current="request()->routeIs('prayers.index')" :badge="$newPrayersCount > 0 ? $newPrayersCount : null" badge:color="red" wire:navigate>
                         {{ __('Prayers') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="chat-bubble-left-right" :href="route('admin.testimonials')" :current="request()->routeIs('admin.testimonials')" wire:navigate>
+                    <flux:sidebar.item icon="chat-bubble-left-right" :href="route('admin.testimonials')" :current="request()->routeIs('admin.testimonials')" :badge="$newTestimonialsCount > 0 ? $newTestimonialsCount : null" badge:color="red" wire:navigate>
                         {{ __('Testimonials') }}
                     </flux:sidebar.item>
-                    <flux:sidebar.item icon="phone" :href="route('admin.callbacks')" :current="request()->routeIs('admin.callbacks*')" wire:navigate>
+                    <flux:sidebar.item icon="phone" :href="route('admin.callbacks')" :current="request()->routeIs('admin.callbacks*')" :badge="$newCallbacksCount > 0 ? $newCallbacksCount : null" badge:color="red" wire:navigate>
                         {{ __('Callbacks') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>

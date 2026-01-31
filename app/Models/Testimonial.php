@@ -6,11 +6,17 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Cache;
 
 class Testimonial extends Model
 {
     /** @use HasFactory<\Database\Factories\TestimonialFactory> */
     use HasFactory;
+
+    protected static function booted(): void
+    {
+        static::created(fn () => Cache::forget('nav_new_testimonials'));
+    }
 
     protected $fillable = [
         'prayer_request_id',
@@ -53,5 +59,13 @@ class Testimonial extends Model
     {
         return $query->where('is_public', true)
             ->where('is_approved', false);
+    }
+
+    /**
+     * Scope to get testimonials submitted within the last 24 hours.
+     */
+    public function scopeRecentlySubmitted(Builder $query): Builder
+    {
+        return $query->where('created_at', '>=', now()->subDay());
     }
 }
