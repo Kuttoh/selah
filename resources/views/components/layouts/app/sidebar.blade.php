@@ -19,6 +19,15 @@
                         {{ __('Testimonials') }}
                     </flux:sidebar.item>
                 </flux:sidebar.group>
+
+                <flux:sidebar.group :heading="__('Settings')" class="grid">
+                    <flux:sidebar.item icon="user-group" :href="route('admin.groups')" :current="request()->routeIs('admin.groups')" wire:navigate>
+                        {{ __('Groups') }}
+                    </flux:sidebar.item>
+                    <flux:sidebar.item icon="calendar" :href="route('admin.services')" :current="request()->routeIs('admin.services')" wire:navigate>
+                        {{ __('Services') }}
+                    </flux:sidebar.item>
+                </flux:sidebar.group>
             </flux:sidebar.nav>
 
             <flux:spacer />

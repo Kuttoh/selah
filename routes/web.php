@@ -31,6 +31,14 @@ Route::prefix('admin')->get('/testimonials', function () {
     return view('testimonials.testimonials');
 })->middleware(['auth', 'verified'])->name('admin.testimonials');
 
+Route::prefix('admin')->get('/groups', function () {
+    return view('admin.groups');
+})->middleware(['auth', 'verified'])->name('admin.groups');
+
+Route::prefix('admin')->get('/services', function () {
+    return view('admin.services');
+})->middleware(['auth', 'verified'])->name('admin.services');
+
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
 //     ->name('dashboard');
