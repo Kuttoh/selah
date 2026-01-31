@@ -23,6 +23,11 @@ Route::get('/prayers/create', function () {
     return view('prayers.create');
 })->name('prayers.create');
 
+// Public callback request page
+Route::get('/callbacks/request', function () {
+    return view('callbacks.request');
+})->name('callbacks.request');
+
 Route::prefix('admin')->get('/prayers', function () {
     return view('prayers.prayers');
 })->middleware(['auth', 'verified'])->name('prayers.index');
@@ -38,6 +43,14 @@ Route::prefix('admin')->get('/groups', function () {
 Route::prefix('admin')->get('/services', function () {
     return view('admin.services');
 })->middleware(['auth', 'verified'])->name('admin.services');
+
+Route::prefix('admin')->get('/callbacks', function () {
+    return view('admin.callbacks');
+})->middleware(['auth', 'verified'])->name('admin.callbacks');
+
+Route::prefix('admin')->get('/callbacks/{callback}', function (\App\Models\Callback $callback) {
+    return view('admin.callback-detail', ['callback' => $callback]);
+})->middleware(['auth', 'verified'])->name('admin.callbacks.show');
 
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])

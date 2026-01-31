@@ -18,6 +18,9 @@
                     <flux:sidebar.item icon="chat-bubble-left-right" :href="route('admin.testimonials')" :current="request()->routeIs('admin.testimonials')" wire:navigate>
                         {{ __('Testimonials') }}
                     </flux:sidebar.item>
+                    <flux:sidebar.item icon="phone" :href="route('admin.callbacks')" :current="request()->routeIs('admin.callbacks*')" wire:navigate>
+                        {{ __('Callbacks') }}
+                    </flux:sidebar.item>
                 </flux:sidebar.group>
 
                 <flux:sidebar.group :heading="__('Settings')" class="grid">

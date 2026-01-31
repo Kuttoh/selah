@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Enums\PrayerStatus;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PrayerRequest>
@@ -22,6 +23,7 @@ class PrayerRequestFactory extends Factory
             'name' => $this->faker->name(),
             'status' => PrayerStatus::Received,
             'prayed_at' => null,
+            'public_token' => Str::uuid()->toString(),
         ];
     }
 
