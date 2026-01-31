@@ -60,6 +60,13 @@
                     @enderror
                 </div>
 
+                <div class="mb-4 flex items-start gap-2 text-left">
+                    <flux:checkbox wire:model="isPublic" id="isPublic" checked />
+                    <label for="isPublic" class="text-sm text-[#706f6c] dark:text-[#A1A09A]">
+                        Allow my testimony to be displayed publicly on the site
+                    </label>
+                </div>
+
                 <p class="text-[#706f6c] dark:text-[#A1A09A] text-xs italic mb-4">
                     Your testimony will be reviewed by our team before appearing on our site.
                 </p>

@@ -12,6 +12,8 @@ class ShareTestimony extends Component
 
     public string $displayName = '';
 
+    public bool $isPublic = true;
+
     public bool $submitted = false;
 
     /**
@@ -22,6 +24,7 @@ class ShareTestimony extends Component
         return [
             'content' => ['required', 'string', 'max:2000'],
             'displayName' => ['nullable', 'string', 'max:255'],
+            'isPublic' => ['boolean'],
         ];
     }
 
@@ -43,13 +46,13 @@ class ShareTestimony extends Component
         Testimonial::create([
             'content' => $this->content,
             'display_name' => $this->displayName ?: null,
-            'is_public' => true,
+            'is_public' => $this->isPublic,
             'is_approved' => false,
             'prayer_request_id' => null,
         ]);
 
         $this->submitted = true;
-        $this->reset(['content', 'displayName']);
+        $this->reset(['content', 'displayName', 'isPublic']);
     }
 
     public function render(): View
