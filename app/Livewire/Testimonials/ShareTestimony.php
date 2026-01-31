@@ -3,35 +3,37 @@
 namespace App\Livewire\Testimonials;
 
 use App\Models\Testimonial;
+use Illuminate\View\View;
 use Livewire\Component;
 
-class SubmitTestimonial extends Component
+class ShareTestimony extends Component
 {
     public string $content = '';
 
     public string $displayName = '';
 
-    public bool $showModal = false;
-
     public bool $submitted = false;
 
+    /**
+     * @return array<string, array<int, string>>
+     */
     protected function rules(): array
     {
         return [
-            'content' => 'required|string|max:2000',
-            'displayName' => 'nullable|string|max:255',
+            'content' => ['required', 'string', 'max:2000'],
+            'displayName' => ['nullable', 'string', 'max:255'],
         ];
     }
 
-    public function openModal(): void
+    /**
+     * @return array<string, string>
+     */
+    protected function messages(): array
     {
-        $this->showModal = true;
-    }
-
-    public function closeModal(): void
-    {
-        $this->showModal = false;
-        $this->reset(['content', 'displayName']);
+        return [
+            'content.required' => 'Please share your testimony.',
+            'content.max' => 'Your testimony must be less than 2000 characters.',
+        ];
     }
 
     public function submit(): void
@@ -47,12 +49,11 @@ class SubmitTestimonial extends Component
         ]);
 
         $this->submitted = true;
-        $this->showModal = false;
         $this->reset(['content', 'displayName']);
     }
 
-    public function render()
+    public function render(): View
     {
-        return view('testimonials.submit-testimonial');
+        return view('testimonials.share-testimony');
     }
 }

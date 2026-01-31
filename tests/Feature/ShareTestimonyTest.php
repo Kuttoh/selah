@@ -2,45 +2,35 @@
 
 namespace Tests\Feature;
 
-use App\Livewire\Testimonials\SubmitTestimonial;
+use App\Livewire\Testimonials\ShareTestimony;
 use App\Models\Testimonial;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class SubmitTestimonialTest extends TestCase
+class ShareTestimonyTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_modal_initially_closed(): void
+    public function test_share_testimony_page_is_accessible(): void
     {
-        Livewire::test(SubmitTestimonial::class)
-            ->assertSet('showModal', false)
-            ->assertSet('submitted', false);
+        $response = $this->get(route('testimonials.share'));
+
+        $response->assertStatus(200);
+        $response->assertSeeLivewire(ShareTestimony::class);
     }
 
-    public function test_open_modal(): void
+    public function test_component_initially_shows_form(): void
     {
-        Livewire::test(SubmitTestimonial::class)
-            ->call('openModal')
-            ->assertSet('showModal', true);
-    }
-
-    public function test_close_modal_resets_form(): void
-    {
-        Livewire::test(SubmitTestimonial::class)
-            ->call('openModal')
-            ->set('content', 'Test testimonial content')
-            ->set('displayName', 'Test User')
-            ->call('closeModal')
-            ->assertSet('showModal', false)
+        Livewire::test(ShareTestimony::class)
+            ->assertSet('submitted', false)
             ->assertSet('content', '')
             ->assertSet('displayName', '');
     }
 
     public function test_submit_requires_content(): void
     {
-        Livewire::test(SubmitTestimonial::class)
+        Livewire::test(ShareTestimony::class)
             ->call('submit')
             ->assertHasErrors(['content']);
     }
@@ -49,7 +39,7 @@ class SubmitTestimonialTest extends TestCase
     {
         $longContent = str_repeat('a', 2001);
 
-        Livewire::test(SubmitTestimonial::class)
+        Livewire::test(ShareTestimony::class)
             ->set('content', $longContent)
             ->call('submit')
             ->assertHasErrors(['content']);
@@ -59,7 +49,7 @@ class SubmitTestimonialTest extends TestCase
     {
         $longName = str_repeat('a', 256);
 
-        Livewire::test(SubmitTestimonial::class)
+        Livewire::test(ShareTestimony::class)
             ->set('content', 'Valid testimonial content')
             ->set('displayName', $longName)
             ->call('submit')
@@ -68,7 +58,7 @@ class SubmitTestimonialTest extends TestCase
 
     public function test_can_submit_testimonial_with_display_name(): void
     {
-        Livewire::test(SubmitTestimonial::class)
+        Livewire::test(ShareTestimony::class)
             ->set('content', 'God has blessed my life in many ways!')
             ->set('displayName', 'Sarah M.')
             ->call('submit')
@@ -85,7 +75,7 @@ class SubmitTestimonialTest extends TestCase
 
     public function test_can_submit_testimonial_anonymously(): void
     {
-        Livewire::test(SubmitTestimonial::class)
+        Livewire::test(ShareTestimony::class)
             ->set('content', 'A humble testimony of faith')
             ->call('submit')
             ->assertSet('submitted', true);
@@ -101,7 +91,7 @@ class SubmitTestimonialTest extends TestCase
 
     public function test_form_resets_after_submission(): void
     {
-        Livewire::test(SubmitTestimonial::class)
+        Livewire::test(ShareTestimony::class)
             ->set('content', 'Test content')
             ->set('displayName', 'Test Name')
             ->call('submit')
@@ -110,31 +100,28 @@ class SubmitTestimonialTest extends TestCase
             ->assertSet('submitted', true);
     }
 
-    public function test_modal_closes_after_submission(): void
+    public function test_success_state_shows_thank_you_message(): void
     {
-        Livewire::test(SubmitTestimonial::class)
-            ->call('openModal')
-            ->assertSet('showModal', true)
+        Livewire::test(ShareTestimony::class)
             ->set('content', 'Test testimonial')
             ->call('submit')
-            ->assertSet('showModal', false);
+            ->assertSee('Thank You for Sharing');
     }
 
-    public function test_submitted_state_shows_success_message(): void
+    public function test_success_state_shows_return_home_button(): void
     {
-        Livewire::test(SubmitTestimonial::class)
+        Livewire::test(ShareTestimony::class)
             ->set('content', 'Test testimonial')
             ->call('submit')
-            ->assertSee('Thank you for sharing your testimony!');
+            ->assertSee('Return Home');
     }
 
-    public function test_button_replaced_with_success_text_after_submission(): void
+    public function test_homepage_has_share_testimony_link(): void
     {
-        Livewire::test(SubmitTestimonial::class)
-            ->assertSeeHtml('Share your testimony')
-            ->set('content', 'Test testimonial')
-            ->call('submit')
-            ->assertDontSeeHtml('Share your testimony')
-            ->assertSee('Thank you for sharing your testimony!');
+        $response = $this->get(route('home'));
+
+        $response->assertStatus(200);
+        $response->assertSee('Share your testimony');
+        $response->assertSee(route('testimonials.share'));
     }
 }

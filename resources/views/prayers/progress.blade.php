@@ -13,15 +13,7 @@
                     <p class="text-[#706f6c] dark:text-[#A1A09A] leading-relaxed text-xs"><em>{{ $prayerText }}</em></p>
                 </div>
                 <div class="pt-6 border-t border-[#19140035] dark:border-[#3E3E3A]">
-                    <div class="space-y-2">
-                        <label class="block text-[#706f6c] dark:text-[#A1A09A] mb-6">{{ __('Would you like us to contact you regarding this prayer?') }}</label>
-                        <a
-                            href="{{ route('callbacks.request', ['prayer' => $publicToken]) }}"
-                            class="inline-block dark:bg-[#eeeeec] dark:border-[#eeeeec] dark:text-[#1C1C1A] dark:hover:bg-white dark:hover:border-white hover:bg-black hover:border-black px-5 py-1.5 bg-[#1b1b18] rounded-sm border border-black text-white leading-normal"
-                        >
-                            {{ __('Request Callback') }}
-                        </a>
-                    </div>
+                    <livewire:prayers.request-prayer-callback :public-token="$publicToken" />
                 </div>
                 <div class="pt-6 border-t border-[#19140035] dark:border-[#3E3E3A]">
                     <livewire:prayers.mark-prayer-answered :public-token="$publicToken" />

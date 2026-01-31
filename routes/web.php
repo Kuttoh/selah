@@ -4,9 +4,37 @@ use App\Http\Controllers\PublicPrayerProgressController;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\RegisteredUserController;
 
+/*
+|--------------------------------------------------------------------------
+| Guest Routes
+|--------------------------------------------------------------------------
+*/
+
 Route::get('/', function () {
     return view('cta');
 })->name('home');
+
+Route::get('/prayers/create', function () {
+    return view('prayers.create');
+})->name('prayers.create');
+
+Route::get('/prayers/{token}', [PublicPrayerProgressController::class, 'show'])
+    ->middleware(['throttle:prayer-progress'])
+    ->name('prayers.progress');
+
+Route::get('/callbacks/request', function () {
+    return view('callbacks.request');
+})->name('callbacks.request');
+
+Route::get('/share-testimony', function () {
+    return view('testimonials.share');
+})->name('testimonials.share');
+
+/*
+|--------------------------------------------------------------------------
+| Admin Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::redirect('/login', '/admin/login', 301);
 Route::redirect('/register', '/admin/register', 301);
@@ -19,46 +47,15 @@ Route::prefix('admin')
         Route::post('/register', [RegisteredUserController::class, 'store'])->name('register.store');
     });
 
-Route::get('/prayers/create', function () {
-    return view('prayers.create');
-})->name('prayers.create');
-
-// Public callback request page
-Route::get('/callbacks/request', function () {
-    return view('callbacks.request');
-})->name('callbacks.request');
-
-Route::prefix('admin')->get('/prayers', function () {
-    return view('prayers.prayers');
-})->middleware(['auth', 'verified'])->name('prayers.index');
-
-Route::prefix('admin')->get('/testimonials', function () {
-    return view('testimonials.testimonials');
-})->middleware(['auth', 'verified'])->name('admin.testimonials');
-
-Route::prefix('admin')->get('/groups', function () {
-    return view('admin.groups');
-})->middleware(['auth', 'verified'])->name('admin.groups');
-
-Route::prefix('admin')->get('/services', function () {
-    return view('admin.services');
-})->middleware(['auth', 'verified'])->name('admin.services');
-
-Route::prefix('admin')->get('/callbacks', function () {
-    return view('admin.callbacks');
-})->middleware(['auth', 'verified'])->name('admin.callbacks');
-
-Route::prefix('admin')->get('/callbacks/{callback}', function (\App\Models\Callback $callback) {
-    return view('admin.callback-detail', ['callback' => $callback]);
-})->middleware(['auth', 'verified'])->name('admin.callbacks.show');
-
-// Route::view('dashboard', 'dashboard')
-//     ->middleware(['auth', 'verified'])
-//     ->name('dashboard');
+Route::prefix('admin')
+    ->middleware(['auth', 'verified'])
+    ->group(function () {
+        Route::get('/prayers', fn () => view('prayers.prayers'))->name('prayers.index');
+        Route::get('/testimonials', fn () => view('testimonials.testimonials'))->name('admin.testimonials');
+        Route::get('/groups', fn () => view('admin.groups'))->name('admin.groups');
+        Route::get('/services', fn () => view('admin.services'))->name('admin.services');
+        Route::get('/callbacks', fn () => view('admin.callbacks'))->name('admin.callbacks');
+        Route::get('/callbacks/{callback}', fn (\App\Models\Callback $callback) => view('admin.callback-detail', ['callback' => $callback]))->name('admin.callbacks.show');
+    });
 
 require __DIR__.'/settings.php';
-
-// Public token-based progress endpoint (rate limited)
-Route::get('/prayers/{token}', [PublicPrayerProgressController::class, 'show'])
-    ->middleware(['throttle:prayer-progress'])
-    ->name('prayers.progress');
