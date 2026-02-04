@@ -10,6 +10,15 @@
         <div class="flex items-center justify-center w-full transition-opacity opacity-100 duration-750 lg:grow starting:opacity-0">
             {{ $slot }}
         </div>
+        <footer class="mt-6 text-xs text-zinc-500 dark:text-zinc-400">
+            <span>{{ config('app.name') }} © {{ now()->year }}</span>
+            @if (!Route::is('home'))
+                 <span class="mx-2">·</span>
+                <a class="hover:underline" href="{{ route('home') }}">Home</a>
+            @endif
+            <span class="mx-2">·</span>
+            <a class="hover:underline" href="{{ route('prayers.index') }}">Admin</a>
+        </footer>
         @fluxScripts
     </body>
 </html>
