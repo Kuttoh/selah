@@ -55,6 +55,7 @@
                     @enderror
 
                     <flux:select wire:model="serviceId" label="{{ __('Service (Optional)') }}" placeholder="{{ __('Select a service...') }}">
+                        <flux:select.option value="">{{ __('Select a service...') }}</flux:select.option>
                         @foreach($services as $service)
                             <flux:select.option value="{{ $service->id }}">{{ $service->name }}</flux:select.option>
                         @endforeach
